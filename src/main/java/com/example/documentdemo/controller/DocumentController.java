@@ -2,12 +2,16 @@ package com.example.documentdemo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.documentdemo.dto.DocumentMetaData;
 import com.example.documentdemo.exception.DocumentAlreadyExistsException;
+import com.example.documentdemo.exception.DocumentNotFoundException;
 import com.example.documentdemo.exception.FileStorageException;
 import com.example.documentdemo.model.Document;
 import com.example.documentdemo.service.DocumentService;
@@ -49,8 +54,10 @@ public class DocumentController {
       @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}", content = {
           @Content(examples = { @ExampleObject(value = "") }) }) })
   @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
-  public ResponseEntity<?> uploadDocuments(@RequestParam(value = "documents") MultipartFile[] multipartFiles,
-      @RequestParam(value = "username") String userName) throws FileStorageException, DocumentAlreadyExistsException {
+  public ResponseEntity<?> uploadDocuments(
+      @Valid @NotNull @RequestParam(value = "documents") MultipartFile[] multipartFiles,
+      @Valid @NotNull @RequestParam(value = "username") String userName)
+      throws FileStorageException, DocumentAlreadyExistsException {
     log.info("Document upload begins for user {}", userName);
     documentService.addDocuments(multipartFiles, userName);
     log.info("Document successfully uploaded for user {}", userName);
@@ -66,8 +73,8 @@ public class DocumentController {
       @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}", content = {
           @Content(examples = { @ExampleObject(value = "") }) }) })
   @GetMapping("/downloadFile")
-  public ResponseEntity<?> downloadFile(@RequestParam(value = "filename") String fileName,
-      @RequestParam(value = "username") String userName) {
+  public ResponseEntity<?> downloadFile(@Valid @NotNull @RequestParam(value = "filename") String fileName,
+      @Valid @NotNull @RequestParam(value = "username") String userName) {
     Resource resource = null;
     log.info("Document download begins for user {}", userName);
     resource = documentService.getResourceByUserAndDocumentName(userName, fileName);
@@ -87,7 +94,7 @@ public class DocumentController {
       @ApiResponse(responseCode = "404", description = "${api.response-codes.notFound.desc}", content = {
           @Content(examples = { @ExampleObject(value = "") }) }) })
   @GetMapping(path = "/documents")
-  public ResponseEntity<?> getDocumentsByUserName(@RequestParam(value = "username") String userName) {
+  public ResponseEntity<?> getDocumentsByUserName(@Valid @NotNull @RequestParam(value = "username") String userName) {
     List<DocumentMetaData> docMetaDataList = documentService.getDocumentsByUserName(userName);
     return new ResponseEntity<>((docMetaDataList), HttpStatus.OK);
   }
@@ -101,7 +108,9 @@ public class DocumentController {
           @Content(examples = { @ExampleObject(value = "") }) }) })
   @PutMapping(path = "/update/{id}", consumes = "multipart/form-data")
   public ResponseEntity<?> updateDocument(@RequestParam(value = "name", required = false) String newName,
-      @PathVariable Long id, @RequestParam(value = "document", required = false) MultipartFile multipartFile) {
+      @Valid @NotNull @PathVariable Long id,
+      @RequestParam(value = "document", required = false) MultipartFile multipartFile)
+      throws FileStorageException, DocumentNotFoundException, MissingServletRequestParameterException {
     Document updatedDoc = documentService.updateDocument(newName, id, multipartFile);
     return new ResponseEntity<>(updatedDoc, HttpStatus.OK);
   }

@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.documentdemo.dto.DocumentMetaData;
@@ -79,9 +80,12 @@ public class DocumentServiceImpl implements DocumentService {
 
   @Override
   @Transactional
-  public Document updateDocument(String newName, Long id, MultipartFile fileToUpdate) {
+  public Document updateDocument(String newName, Long id, MultipartFile fileToUpdate) throws MissingServletRequestParameterException {
+    if(newName == null && fileToUpdate == null) {
+      throw new MissingServletRequestParameterException(newName, newName);
+    }
     Optional<Document> oldDoc = Optional.of(documentRepository.getOne(id));
-
+    
     return oldDoc.map(document -> {
       try {
         // String oldHash = document.getHash();

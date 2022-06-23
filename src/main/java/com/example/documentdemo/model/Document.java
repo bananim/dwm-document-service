@@ -41,34 +41,4 @@ public class Document {
 
   @Column(name = "updated_time")
   private Date updatedTime;
-
-  /*
-   * public String getUserName() { return userName; }
-   * 
-   * public void setUserName(String userName) { this.userName = userName; }
-   * 
-   * public Long getId() { return id; }
-   * 
-   * public String getName() { return name; }
-   * 
-   * public void setName(String name) { this.name = name; }
-   * 
-   * public String getMimeType() { return mimeType; }
-   * 
-   * public void setMimeType(String mimeType) { this.mimeType = mimeType; }
-   * 
-   * public long getSize() { return size; }
-   * 
-   * public void setSize(long size) { this.size = size; }
-   * 
-   * public Date getCreatedTime() { return createdTime; }
-   * 
-   * public void setCreatedTime(Date createdTime) { this.createdTime =
-   * createdTime; }
-   * 
-   * public Date getUpdatedTime() { return updatedTime; }
-   * 
-   * public void setUpdatedTime(Date updatedTime) { this.updatedTime =
-   * updatedTime; }
-   */
 }
