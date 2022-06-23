@@ -1,20 +1,23 @@
 # dwm-document-service
 
-Service responsible for storage, retrieval and update of documents for users.
+Service responsible for storage, retrieval and update of documents for users. This microservice uses restful design.
 
-This includes:
+Technology : SpringBoot, H2 in memory database, maven, jpa
 
+Scope of the service includes:
 ● Overview of currently attached documents for a user
 ● Document upload, download and modification functionality
 ● Documents with metadata like name and type , creation date and updated date
 ● Persist data across restarts
-● Maximum aloowed document upload size limit is 2MB
 
+Validation : 
+● Maximum allowed document upload size limit is 2MB
+● Document name is unique per user
 
 
 Swagger Link: http://localhost:8080/swagger-ui-document-api.html
 
- 
+Health Actuator :  
 
 How to run the service:
 
@@ -36,7 +39,7 @@ Endpoint/Interface summary:
 4."/api/document/documents" : Fetches all the documents for a user.
 
 
-Storage and persistance:
+Storage and Persistence:
 1.The service uses H2 database to store the Documents information and metadata.
 And the original document is stored in the current working space.
 
@@ -44,3 +47,5 @@ And the original document is stored in the current working space.
 
 
 Future enhancement possibilities:
+Store the files in Azure Blob Storage or AWS S3 buckets instead of in OS disk
+
