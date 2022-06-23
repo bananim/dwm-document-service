@@ -4,5 +4,7 @@ CREATE TABLE DOCUMENT_INFO (
 	mime_type VARCHAR(128),
 	size NUMBER(128),
 	user_name VARCHAR(128) NOT NULL,
+	created_time DATE NOT NULL;
+	updated_time DATE;
 	PRIMARY KEY(id)
 );

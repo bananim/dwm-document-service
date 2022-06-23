@@ -1,9 +1,5 @@
 package com.example.documentdemo.model;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,80 +10,64 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-@Table( name="DOCUMENT_INFO",
-	    uniqueConstraints=
-	        @UniqueConstraint(columnNames={"name", "user_name"})
-	)
+import lombok.Getter;
+import lombok.Setter;
+
+@Table(name = "DOCUMENT_INFO", uniqueConstraints = @UniqueConstraint(columnNames = { "name", "user_name" }))
 @Entity
+@Setter @Getter
 public class Document {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
 
-	@Column(name = "name")
-	private String name;
-	
-	@Column(name = "mime_type")
-	private String mimeType;
-	
-	@Column(name = "size")
-	private long size = 0;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", updatable = false, nullable = false)
+  private Long id;
 
-  /*
-   * @Column(name = "hash", nullable = false, unique = true) private String hash;
-   */
-	@Column(name = "user_name", nullable = false)
-	private String userName;
-	
-	public static final int RADIX = 16;
+  @Column(name = "name")
+  private String name;
 
-	public String getUserName() {
-		return userName;
-	}
+  @Column(name = "mime_type")
+  private String mimeType;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+  @Column(name = "size")
+  private long size = 0;
 
-	public Long getId() {
-		return id;
-	}
+  @Column(name = "user_name", nullable = false)
+  private String userName;
 
-	public String getName() {
-		return name;
-	}
+  @Column(name = "created_time", nullable = false)
+  private Date createdTime;
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getMimeType() {
-		return mimeType;
-	}
-
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
-	}
-
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
+  @Column(name = "updated_time")
+  private Date updatedTime;
 
   /*
-   * public String getHash() { return hash; }
+   * public String getUserName() { return userName; }
    * 
-   * public void setHash() throws NoSuchAlgorithmException { String
-   * transformedName = new
-   * StringBuilder().append(this.name).append(this.mimeType).append(this.size)
-   * .append(new Date().getTime()).toString(); MessageDigest messageDigest =
-   * MessageDigest.getInstance("MD5");
-   * messageDigest.update(transformedName.getBytes(StandardCharsets.UTF_8));
-   * this.hash = new BigInteger(1, messageDigest.digest()).toString(RADIX); }
+   * public void setUserName(String userName) { this.userName = userName; }
+   * 
+   * public Long getId() { return id; }
+   * 
+   * public String getName() { return name; }
+   * 
+   * public void setName(String name) { this.name = name; }
+   * 
+   * public String getMimeType() { return mimeType; }
+   * 
+   * public void setMimeType(String mimeType) { this.mimeType = mimeType; }
+   * 
+   * public long getSize() { return size; }
+   * 
+   * public void setSize(long size) { this.size = size; }
+   * 
+   * public Date getCreatedTime() { return createdTime; }
+   * 
+   * public void setCreatedTime(Date createdTime) { this.createdTime =
+   * createdTime; }
+   * 
+   * public Date getUpdatedTime() { return updatedTime; }
+   * 
+   * public void setUpdatedTime(Date updatedTime) { this.updatedTime =
+   * updatedTime; }
    */
 }
