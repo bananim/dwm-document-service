@@ -15,7 +15,8 @@ import lombok.Setter;
 
 @Table(name = "DOCUMENT_INFO", uniqueConstraints = @UniqueConstraint(columnNames = { "name", "user_name" }))
 @Entity
-@Setter @Getter
+@Setter
+@Getter
 public class Document {
 
   @Id

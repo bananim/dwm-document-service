@@ -1,9 +1,6 @@
 package com.example.documentdemo.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -78,9 +75,7 @@ public class DocumentController {
     String contentType = "application/octet-stream";
     String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
     log.info("Document download success for user {}", userName);
-    return ResponseEntity
-        .ok()
-        .contentType(MediaType.parseMediaType(contentType))
+    return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
         .header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
   }
 

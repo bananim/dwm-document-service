@@ -17,7 +17,10 @@ Validation :
 
 Swagger Link: http://localhost:8080/swagger-ui-document-api.html
 
-Health Actuator :  
+Health Actuator :
+http://<server>:8080/actuator/health
+Example
+http://localhost:8080/actuator/health  
 
 How to run the service:
 
