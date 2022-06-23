@@ -32,7 +32,7 @@ The application can be accessed at http://localhost:8080.
     java -jar documentdemo-0.0.1-SNAPSHOT.jar
 
 3. Run the docker image of the app
-docker run -p 8080:8080 banani9/document_service_1.0.0
+docker run -p 8080:8080 banani9/document_service_1.1.0
 
 Endpoint/Interface summary:
 
